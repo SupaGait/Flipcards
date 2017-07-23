@@ -1,6 +1,6 @@
-﻿using System.Runtime.InteropServices.ComTypes;
+﻿using System;
 using System.Windows.Input;
-using Flipcards.Utils;
+using ProjectUtils.Binding;
 using FlipcardsModel;
 
 namespace Flipcards.Viewmodel{
@@ -8,6 +8,7 @@ namespace Flipcards.Viewmodel{
     {
         #region fields
         private Flipcard _flipcard;
+        private ICommand _flipcardCommand;
         #endregion
 
         #region properties
@@ -23,6 +24,22 @@ namespace Flipcards.Viewmodel{
                 }
             }
         }
+
+        public ICommand FlipCommand {
+            get {
+                return _flipcardCommand ??
+                       (_flipcardCommand = new RelayCommand(
+                           param => FlipCard(),
+                           param => true)
+                       );
+            }
+        }
+
+        private void FlipCard()
+        {
+            _flipcard.Flipped = !_flipcard.Flipped;
+        }
+
         #endregion
 
         /// <summary>

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlipcardsModel", "FlipCards
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlipCardsModel_Test", "FlipCardsModel_Test\FlipCardsModel_Test.csproj", "{B83D3310-AAA3-4B89-872E-C0771C986E86}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectUtils", "ProjectUtils\ProjectUtils.csproj", "{4D5D88C3-88BE-496B-9476-F91AA298566B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{B83D3310-AAA3-4B89-872E-C0771C986E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B83D3310-AAA3-4B89-872E-C0771C986E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B83D3310-AAA3-4B89-872E-C0771C986E86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D5D88C3-88BE-496B-9476-F91AA298566B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D5D88C3-88BE-496B-9476-F91AA298566B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D5D88C3-88BE-496B-9476-F91AA298566B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D5D88C3-88BE-496B-9476-F91AA298566B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

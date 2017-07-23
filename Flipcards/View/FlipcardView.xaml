@@ -6,16 +6,22 @@
              xmlns:local="clr-namespace:Flipcards.View"
              xmlns:vm="clr-namespace:Flipcards.Viewmodel"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:FlipCardViewModel}">
-    <StackPanel>
-        <TextBlock Text="Flipcard" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <TextBlock Text="{Binding FlipcardModel.OriginalLanguage}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <TextBlock Text="{Binding FlipcardModel.TranslatedLanguage}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-
-        
-            <Button Content="Save Flipcard" VerticalAlignment="Center"
-                    Command="{Binding Path=SaveProductCommand}" Width="100" />
-
-            <Button Content="Get Flipcard" VerticalAlignment="Center"
-                    Command="{Binding Path=GetProductCommand}" IsDefault="True" Width="100" />
+    <Border Height="75" Width="257.5" BorderThickness="1" BorderBrush="#FF060D21">
+        <StackPanel>
+            <StackPanel.InputBindings>
+                <MouseBinding Gesture="LeftClick" Command="{Binding FlipCommand}"></MouseBinding>
+            </StackPanel.InputBindings>
+            <!--<StackPanel.Background>
+                <LinearGradientBrush StartPoint="0.0,0.5" EndPoint="1,0.5" MappingMode="RelativeToBoundingBox">
+                    <GradientStop Color="#FF1F397A"/>
+                    <GradientStop Color="#FF99A3B9" Offset="0.2"/>
+                    <GradientStop Color="#FF99A3B9" Offset="0.8"/>
+                    <GradientStop Color="#FF1F397A" Offset="1"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>-->
+            <TextBlock Text="{Binding FlipcardModel.Word}" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+            <TextBlock Text="{Binding FlipcardModel.OriginalLanguage, Converter={StaticResource EnumConverter}}" HorizontalAlignment="Right"/>
         </StackPanel>
+    </Border>
 </UserControl>

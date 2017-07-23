@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 
-namespace Flipcards.Utils {
+namespace ProjectUtils.Binding {
     public abstract class ObservableObject : INotifyPropertyChanged {
         #region INotifyPropertyChanged Members
 

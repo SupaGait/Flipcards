@@ -55,7 +55,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Utils\RelayCommand.cs" />
     <Compile Include="Viewmodel\FlipCardViewModel.cs" />
     <Compile Include="Viewmodel\MainViewModel.cs" />
     <Compile Include="View\FlipcardView.xaml.cs">
@@ -79,7 +78,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Utils\ObservableObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -110,6 +108,10 @@
     <ProjectReference Include="..\FlipCardsModel\FlipcardsModel.csproj">
       <Project>{FEA9103B-E0BD-4935-BECF-FD113BD15D3A}</Project>
       <Name>FlipcardsModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProjectUtils\ProjectUtils.csproj">
+      <Project>{4d5d88c3-88be-496b-9476-f91aa298566b}</Project>
+      <Name>ProjectUtils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

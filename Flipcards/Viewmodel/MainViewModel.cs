@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Flipcards.Utils;
 using FlipcardsModel;
+using ProjectUtils.Binding;
 
 namespace Flipcards.Viewmodel {
     class MainViewModel : ObservableObject

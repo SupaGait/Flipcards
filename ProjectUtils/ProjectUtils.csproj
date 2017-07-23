@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FEA9103B-E0BD-4935-BECF-FD113BD15D3A}</ProjectGuid>
+    <ProjectGuid>{4D5D88C3-88BE-496B-9476-F91AA298566B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FlipcardsModel</RootNamespace>
-    <AssemblyName>FlipcardsModel</AssemblyName>
+    <RootNamespace>ProjectUtils</RootNamespace>
+    <AssemblyName>ProjectUtils</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,8 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -39,19 +40,13 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Flipcard.cs" />
-    <Compile Include="FlipcardDatabase.cs" />
-    <Compile Include="FlipcardDeck.cs" />
-    <Compile Include="Language.cs" />
+    <Compile Include="Converter\EnumConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ProjectUtils\ProjectUtils.csproj">
-      <Project>{4d5d88c3-88be-496b-9476-f91aa298566b}</Project>
-      <Name>ProjectUtils</Name>
-    </ProjectReference>
+    <Compile Include="Binding\ObservableObject.cs" />
+    <Compile Include="Binding\RelayCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

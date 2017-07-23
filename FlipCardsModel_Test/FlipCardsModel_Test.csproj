@@ -58,6 +58,10 @@
       <Project>{fea9103b-e0bd-4935-becf-fd113bd15d3a}</Project>
       <Name>FlipcardsModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ProjectUtils\ProjectUtils.csproj">
+      <Project>{4D5D88C3-88BE-496B-9476-F91AA298566B}</Project>
+      <Name>ProjectUtils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
