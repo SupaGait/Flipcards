@@ -5,32 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Flipcards"
         xmlns:vm="clr-namespace:Flipcards.Viewmodel"
+        xmlns:view="clr-namespace:Flipcards.View"
         xmlns:flipcardsModel="clr-namespace:FlipcardsModel;assembly=FlipcardsModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="625" d:DataContext="{vm:MainViewModel}">
+        Title="MainWindow" Height="350" Width="625">
 
     <Window.Resources>
-        <DataTemplate x:Key="FlipcardsDataTemplate"  DataType="{x:Type flipcardsModel:Flipcard}">
-            <DockPanel Margin="20">
-                <DockPanel DockPanel.Dock="Top">
-                    <TextBlock Margin="10,2" DockPanel.Dock="Left" Text="Enter Product Id" VerticalAlignment="Center" />
-
-                    <TextBox Margin="10,2" Width="50" VerticalAlignment="Center" Text="{Binding Path=TestText, UpdateSourceTrigger=PropertyChanged}" />
-
-                    <Button Content="Save Product" DockPanel.Dock="Right" Margin="10,2" VerticalAlignment="Center"
-                            Command="{Binding Path=SaveProductCommand}" Width="100" />
-
-                    <Button Content="Get Product" DockPanel.Dock="Right" Margin="10,2" VerticalAlignment="Center"
-                            Command="{Binding Path=GetProductCommand}" IsDefault="True" Width="100" />
-                </DockPanel>
-            </DockPanel>
+        <DataTemplate DataType="{x:Type vm:FlipCardViewModel}">
+            <view:FlipcardView></view:FlipcardView>
         </DataTemplate>
-
-   <!--     <DataTemplate DataType="{x:Type vm:FlipCardViewModel}">
-            <flipcardsModel:Flipcard/>
-        </DataTemplate>-->
-
     </Window.Resources>
+    
+    <Window.DataContext>
+        <vm:MainViewModel></vm:MainViewModel>
+    </Window.DataContext>
     
     <Grid>
         <Grid.ColumnDefinitions>
@@ -38,17 +26,15 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
-            <Button Content="Button1"/>
+            <Button Content="Populate" Command="{Binding ShowFlipCardsCommand}"/>
             <Button Content="Button2"/>
         </StackPanel>
-        <ListBox Grid.Column="1" ItemsSource="{Binding Flipcards}" ItemTemplate="{StaticResource FlipcardsDataTemplate}">
-<!--            <ListBox.ItemsPanel>
+        <ItemsControl Grid.Column="1" ItemsSource="{Binding Flipcards}">
+            <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel IsItemsHost="True" Orientation="Horizontal"/>
+                    <WrapPanel/>
                 </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>-->
-        </ListBox>
-        <!--<DataGrid Grid.Column="1">
-        </DataGrid>-->
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
     </Grid>
 </Window>

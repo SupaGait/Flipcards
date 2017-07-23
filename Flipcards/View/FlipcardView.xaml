@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Flipcards.View.FlipcardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Flipcards.View"
+             xmlns:vm="clr-namespace:Flipcards.Viewmodel"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:FlipCardViewModel}">
+    <StackPanel>
+        <TextBlock Text="Flipcard" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock Text="{Binding FlipcardModel.OriginalLanguage}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock Text="{Binding FlipcardModel.TranslatedLanguage}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+        
+            <Button Content="Save Flipcard" VerticalAlignment="Center"
+                    Command="{Binding Path=SaveProductCommand}" Width="100" />
+
+            <Button Content="Get Flipcard" VerticalAlignment="Center"
+                    Command="{Binding Path=GetProductCommand}" IsDefault="True" Width="100" />
+        </StackPanel>
+</UserControl>

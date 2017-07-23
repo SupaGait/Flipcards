@@ -12,14 +12,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Flipcards.Viewmodel;
 
-namespace Flipcards {
+namespace Flipcards.View {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for FlipcardView.xaml
     /// </summary>
-    public partial class MainWindow : Window {
-        public MainWindow() {
+    public partial class FlipcardView : UserControl {
+        public FlipcardView() {
             InitializeComponent();
         }
     }

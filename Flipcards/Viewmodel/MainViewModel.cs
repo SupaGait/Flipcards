@@ -1,24 +1,58 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Flipcards.Utils;
 using FlipcardsModel;
 
 namespace Flipcards.Viewmodel {
-    class MainViewModel : ObservableObject {
-        public ObservableCollection<Flipcard> Flipcards { get; set; }
+    class MainViewModel : ObservableObject
+    {
+        #region fields
+        private ObservableCollection<FlipCardViewModel> _flipcards = new ObservableCollection<FlipCardViewModel>();
+        private ICommand _showFlipCardsCommand;
+        #endregion
 
-        public MainViewModel()
+        #region properties
+        /// <summary>
+        /// A Collection of flipcards shown in the view
+        /// </summary>
+        public ObservableCollection<FlipCardViewModel> Flipcards
         {
-            var dict = new Dictionary<Language, string>
+            get { return _flipcards; }
+            set
             {
-                {Language.Dutch, "stoel"},
-                {Language.German, "sitz"}
-            };
-            Flipcards = new ObservableCollection<Flipcard>
+                if (_flipcards != value)
+                {
+                    _flipcards = value;
+                    OnPropertyChanged(nameof(Flipcards));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Show the cards
+        /// </summary>
+        public ICommand ShowFlipCardsCommand {
+            get {
+                return _showFlipCardsCommand ??
+                       (_showFlipCardsCommand = new RelayCommand(
+                           param => PopulateModel(),
+                           param => (Flipcards.Count == 0))
+                       );
+            }
+        }
+        #endregion
+
+        /// <summary>
+        /// Fill with test data
+        /// </summary>
+        private void PopulateModel()
+        {
+            FlipcardDeck flipcardDeck = new FlipcardDeck();
+            foreach (var flipcard in flipcardDeck.Flipcards)
             {
-                new Flipcard(dict),
-                new Flipcard(dict)
-            };
+                Flipcards.Add(new FlipCardViewModel(flipcard));
+            }
         }
     }
 }

@@ -4,12 +4,15 @@ namespace FlipcardsModel
 {
     public class Flipcard
     {
-        public bool Flipped { get; set; }
+        #region fields
+        private readonly Dictionary<Language, string> _words;
+        #endregion
+
+        #region properties
+        public bool Flipped { get; set; } = false;
         public Language OriginalLanguage { get; set; }
         public Language TranslatedLanguage { get; set; }
-        public string Test { get; set; } = "test";
-
-        private readonly Dictionary<Language, string> _words;
+        #endregion
 
         /// <summary>
         /// Default constuctor which takes a dictonary

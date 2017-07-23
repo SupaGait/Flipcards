@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Flipcard.cs" />
+    <Compile Include="FlipcardDatabase.cs" />
     <Compile Include="FlipcardDeck.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -58,6 +58,9 @@
     <Compile Include="Utils\RelayCommand.cs" />
     <Compile Include="Viewmodel\FlipCardViewModel.cs" />
     <Compile Include="Viewmodel\MainViewModel.cs" />
+    <Compile Include="View\FlipcardView.xaml.cs">
+      <DependentUpon>FlipcardView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -70,6 +73,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\FlipcardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Utils\ObservableObject.cs" />

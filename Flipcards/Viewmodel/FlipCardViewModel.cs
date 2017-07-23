@@ -1,50 +1,36 @@
-﻿using System.Windows.Input;
+﻿using System.Runtime.InteropServices.ComTypes;
+using System.Windows.Input;
 using Flipcards.Utils;
 using FlipcardsModel;
 
 namespace Flipcards.Viewmodel{
     class FlipCardViewModel : ObservableObject
     {
-        public Flipcard FlipcardModel { get; set;}
-        public string TestText { get; } = "TestText";
+        #region fields
+        private Flipcard _flipcard;
+        #endregion
 
-        private ICommand _getProductCommand;
-        private ICommand _saveProductCommand;
-        public ICommand SaveProductCommand
+        #region properties
+        public Flipcard FlipcardModel
         {
-            get
+            get {return _flipcard;}
+            private set
             {
-                if (_saveProductCommand == null)
+                if(value != _flipcard)
                 {
-                    _saveProductCommand = new RelayCommand(
-                        param => SaveProduct(),
-                        param => (FlipcardModel != null)
-                    );
+                    OnPropertyChanged(nameof(FlipcardModel));
+                    _flipcard = value;
                 }
-                return _saveProductCommand;
             }
         }
-        public ICommand GetProductCommand
-        {
-            get
-            {
-                if (_getProductCommand == null)
-                {
-                    _getProductCommand = new RelayCommand(
-                        param => GetProduct(),
-                        param => (TestText.Length > 0)
-                    );
-                }
-                return _getProductCommand;
-            }
-        }
+        #endregion
 
-        private void SaveProduct() {
-            throw new System.NotImplementedException();
-        }
-        private void GetProduct()
-        {
-            throw new System.NotImplementedException();
+        /// <summary>
+        /// Construct the viewmodel for the given flipcard.
+        /// </summary>
+        /// <param name="flipcard">flipcard presented by the viewmodel</param>
+        public FlipCardViewModel(Flipcard flipcard) {
+            FlipcardModel = flipcard;
         }
     }
 }
