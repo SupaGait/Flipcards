@@ -7,6 +7,7 @@ namespace FlipcardsModel
         public bool Flipped { get; set; }
         public Language OriginalLanguage { get; set; }
         public Language TranslatedLanguage { get; set; }
+        public string Test { get; set; } = "test";
 
         private readonly Dictionary<Language, string> _words;
 

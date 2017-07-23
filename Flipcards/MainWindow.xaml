@@ -4,8 +4,33 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Flipcards"
+        xmlns:vm="clr-namespace:Flipcards.Viewmodel"
+        xmlns:flipcardsModel="clr-namespace:FlipcardsModel;assembly=FlipcardsModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="625">
+        Title="MainWindow" Height="350" Width="625" d:DataContext="{vm:MainViewModel}">
+
+    <Window.Resources>
+        <DataTemplate x:Key="FlipcardsDataTemplate"  DataType="{x:Type flipcardsModel:Flipcard}">
+            <DockPanel Margin="20">
+                <DockPanel DockPanel.Dock="Top">
+                    <TextBlock Margin="10,2" DockPanel.Dock="Left" Text="Enter Product Id" VerticalAlignment="Center" />
+
+                    <TextBox Margin="10,2" Width="50" VerticalAlignment="Center" Text="{Binding Path=TestText, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Button Content="Save Product" DockPanel.Dock="Right" Margin="10,2" VerticalAlignment="Center"
+                            Command="{Binding Path=SaveProductCommand}" Width="100" />
+
+                    <Button Content="Get Product" DockPanel.Dock="Right" Margin="10,2" VerticalAlignment="Center"
+                            Command="{Binding Path=GetProductCommand}" IsDefault="True" Width="100" />
+                </DockPanel>
+            </DockPanel>
+        </DataTemplate>
+
+   <!--     <DataTemplate DataType="{x:Type vm:FlipCardViewModel}">
+            <flipcardsModel:Flipcard/>
+        </DataTemplate>-->
+
+    </Window.Resources>
     
     <Grid>
         <Grid.ColumnDefinitions>
@@ -16,6 +41,14 @@
             <Button Content="Button1"/>
             <Button Content="Button2"/>
         </StackPanel>
-        <DataGrid Grid.Column="1"/>
+        <ListBox Grid.Column="1" ItemsSource="{Binding Flipcards}" ItemTemplate="{StaticResource FlipcardsDataTemplate}">
+<!--            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>-->
+        </ListBox>
+        <!--<DataGrid Grid.Column="1">
+        </DataGrid>-->
     </Grid>
 </Window>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Flipcards.Viewmodel;
 
 namespace Flipcards {
     /// <summary>
@@ -20,6 +21,8 @@ namespace Flipcards {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
+
+//            DataContext = new MainViewModel();
         }
     }
 }
