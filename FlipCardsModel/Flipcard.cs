@@ -22,12 +22,14 @@ namespace FlipcardsModel
                     _flipped = value;
                     OnPropertyChanged(nameof(Flipped));
                     OnPropertyChanged(nameof(Word));
+                    OnPropertyChanged(nameof(CurrentLanguage));
                 }
             }
         }
         public string Word => GetWord(Flipped ? TranslatedLanguage : OriginalLanguage);
         public Language OriginalLanguage { get; set; }
         public Language TranslatedLanguage { get; set; }
+        public Language CurrentLanguage { get; }
 
         #endregion
 
@@ -35,9 +37,12 @@ namespace FlipcardsModel
         /// Default constuctor which takes a dictonary
         /// </summary>
         /// <param name="words"></param>
-        public Flipcard(Dictionary<Language, string> words)
+        public Flipcard(Dictionary<Language, string> words, Language originalLanguage, Language translatedLanguage)
         {
             _words = words;
+            OriginalLanguage = originalLanguage;
+            TranslatedLanguage = translatedLanguage;
+            CurrentLanguage = originalLanguage;
         }
 
         public string GetWord(Language language)

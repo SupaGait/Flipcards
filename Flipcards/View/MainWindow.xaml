@@ -8,18 +8,19 @@
         xmlns:view="clr-namespace:Flipcards.View"
         xmlns:flipcardsModel="clr-namespace:FlipcardsModel;assembly=FlipcardsModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="625">
+        d:DataContext="{d:DesignInstance vm:MockFlipCardViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="400" Width="800">
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type vm:FlipCardViewModel}">
             <view:FlipcardView></view:FlipcardView>
         </DataTemplate>
     </Window.Resources>
-    
+
     <Window.DataContext>
-        <vm:MainViewModel></vm:MainViewModel>
+        <vm:MainViewModel/>
     </Window.DataContext>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"></ColumnDefinition>
@@ -27,12 +28,13 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
             <Button Content="Populate" Command="{Binding ShowFlipCardsCommand}"/>
-            <Button Content="Button2"/>
+            <Button Content="Add content" Command="{Binding AddContentCommand}"/>
         </StackPanel>
         <ItemsControl Grid.Column="1" ItemsSource="{Binding Flipcards}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel/>
+                    <WrapPanel >
+                    </WrapPanel>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>

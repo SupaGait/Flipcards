@@ -17,10 +17,7 @@ namespace FlipCardsModel_Test {
                 {Language.Dutch, ChairDutch},
                 {Language.German, ChairGerman}
             };
-            var flipcard = new Flipcard(dict) {
-                OriginalLanguage = Language.Dutch,
-                TranslatedLanguage = Language.German
-            };
+            var flipcard = new Flipcard(dict, Language.Dutch, Language.German);
             return flipcard;
         }
 

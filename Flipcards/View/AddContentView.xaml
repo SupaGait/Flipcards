@@ -1,0 +1,32 @@
+﻿<Window x:Class="Flipcards.View.AddContentView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Flipcards.View"
+        xmlns:vm="clr-namespace:Flipcards.Viewmodel"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance vm:AddContentViewModel}"
+        Title="AddContentView" Height="150" Width="400">
+    <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Label Content="Original:" Grid.Row="0" Grid.Column="0"></Label>
+            <TextBox Text="{Binding OriginalText}" Grid.Row="0" Grid.Column="1"/>
+            <Label Content="Translated:" Grid.Row="1" Grid.Column="0"></Label>
+            <TextBox Text="{Binding TranslatedText}" Grid.Row="1" Grid.Column="1"/>
+            <Label Content="Tags:" Grid.Row="2" Grid.Column="0"></Label>
+            <TextBox Text="{Binding Tags}" Grid.Row="2" Grid.Column="1"/>
+        </Grid>
+        <Button Command="{Binding AddCommand}" Content="Add" Height="40"/>
+    </StackPanel>
+</Window>

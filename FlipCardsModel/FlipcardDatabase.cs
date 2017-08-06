@@ -23,6 +23,11 @@ namespace FlipcardsModel {
             PopulateWithTestData();
         }
 
+        public void AddWord(FlipcardWord flipcardWord)
+        {
+            FlipcardsWords.Add(flipcardWord);
+        }
+
         private void PopulateWithTestData()
         {
             FlipcardsWords = new SortedSet<FlipcardWord>
