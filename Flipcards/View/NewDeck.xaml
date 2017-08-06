@@ -1,0 +1,28 @@
+﻿<Window x:Class="Flipcards.View.NewDeck"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Flipcards.View"
+        mc:Ignorable="d"
+        Title="NewDeck" Height="104.238" Width="329.872">
+    <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Content="Name:"></Label>
+            <TextBox x:Name="NameTextbox" Grid.Column="1"></TextBox>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Create" Click="Button_Click_Create"/>
+            <Button Grid.Column="1" Content="Cancel" Click="Button_Click_Cancel"/>
+        </Grid>
+    </StackPanel>
+</Window>

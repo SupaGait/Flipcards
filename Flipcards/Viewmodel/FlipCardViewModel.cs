@@ -1,30 +1,24 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Input;
+using System.Windows.Media;
 using ProjectUtils.Binding;
 using FlipcardsModel;
 
 namespace Flipcards.Viewmodel{
-    class FlipCardViewModel : ObservableObject
+    class FlipCardViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        private readonly Brush OriginalBackground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF9, 0xFF, 0xD3));
+        private readonly Brush TranslatedBackground = new SolidColorBrush(Color.FromArgb(0xFF, 0xC0, 0xF4, 0xFF));
+
         #region fields
-        private Flipcard _flipcard;
         private ICommand _flipcardCommand;
         #endregion
 
         #region properties
-        public Flipcard FlipcardModel
-        {
-            get {return _flipcard;}
-            private set
-            {
-                if(value != _flipcard)
-                {
-                    OnPropertyChanged(nameof(FlipcardModel));
-                    _flipcard = value;
-                }
-            }
-        }
-
+        public Flipcard FlipcardModel{ get; set; }
+        public Brush Background { get; set; }
         public ICommand FlipCommand {
             get {
                 return _flipcardCommand ??
@@ -35,12 +29,17 @@ namespace Flipcards.Viewmodel{
             }
         }
 
+        #endregion
+
+
+        /// <summary>
+        /// Flip the flipcard
+        /// </summary>
         private void FlipCard()
         {
-            _flipcard.Flipped = !_flipcard.Flipped;
+            FlipcardModel.Flipped = !FlipcardModel.Flipped;
+            Background = FlipcardModel.Flipped ? TranslatedBackground : OriginalBackground;
         }
-
-        #endregion
 
         /// <summary>
         /// Construct the viewmodel for the given flipcard.
@@ -48,6 +47,7 @@ namespace Flipcards.Viewmodel{
         /// <param name="flipcard">flipcard presented by the viewmodel</param>
         public FlipCardViewModel(Flipcard flipcard) {
             FlipcardModel = flipcard;
+            Background = OriginalBackground;
         }
     }
 }

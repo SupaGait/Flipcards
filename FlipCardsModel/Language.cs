@@ -3,10 +3,10 @@
 namespace FlipcardsModel {
     public enum Language {
 
-        [Description("English ...")]
+        [Description("English")]
         English,
 
-        [Description("Dutch wha")]
+        [Description("Dutch")]
         Dutch,
 
         [Description("German")]

@@ -5,18 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Flipcards.View"
              xmlns:vm="clr-namespace:Flipcards.Viewmodel"
-             mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:FlipCardViewModel}" Background="#FFF9FFD3">
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:FlipCardViewModel}" Background="{Binding Background}">
     <Border Height="75" Width="257.5" BorderThickness="1" BorderBrush="#FF060D21">
         <StackPanel>
-            <!--<StackPanel.Background>
-                <LinearGradientBrush StartPoint="0.0,0.5" EndPoint="1,0.5" MappingMode="RelativeToBoundingBox">
-                    <GradientStop Color="#FF1F397A"/>
-                    <GradientStop Color="#FF99A3B9" Offset="0.2"/>
-                    <GradientStop Color="#FF99A3B9" Offset="0.8"/>
-                    <GradientStop Color="#FF1F397A" Offset="1"/>
-                </LinearGradientBrush>
-            </StackPanel.Background>-->
-            <TextBlock Text="{Binding FlipcardModel.Word}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="20"/>
+            <Border Height="54">
+                <TextBlock Text="{Binding FlipcardModel.Word}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="20" />
+            </Border>
             <TextBlock Text="{Binding FlipcardModel.CurrentLanguage, Converter={StaticResource EnumConverter}}" HorizontalAlignment="Right"/>
         </StackPanel>
     </Border>

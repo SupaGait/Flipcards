@@ -29,7 +29,7 @@ namespace FlipcardsModel
         public string Word => GetWord(Flipped ? TranslatedLanguage : OriginalLanguage);
         public Language OriginalLanguage { get; set; }
         public Language TranslatedLanguage { get; set; }
-        public Language CurrentLanguage { get; }
+        public Language CurrentLanguage => Flipped ? TranslatedLanguage : OriginalLanguage;
 
         #endregion
 
@@ -42,7 +42,6 @@ namespace FlipcardsModel
             _words = words;
             OriginalLanguage = originalLanguage;
             TranslatedLanguage = translatedLanguage;
-            CurrentLanguage = originalLanguage;
         }
 
         public string GetWord(Language language)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -18,6 +19,10 @@ namespace Flipcards.Viewmodel {
         protected FlipcardDeck _flipcardDeck = new FlipcardDeck(_flipcardDatabase);
         private ICommand _showFlipCardsCommand;
         private ICommand _addContentCommand;
+        private ICommand _newDeckCommand;
+        private ICommand _saveDeckCommand;
+        private ICommand _loadDeckCommand;
+
         #endregion
 
         #region properties
@@ -51,10 +56,52 @@ namespace Flipcards.Viewmodel {
             }
         }
 
+        public ICommand SaveDeckCommand
+        {
+            get {
+                return _saveDeckCommand ??
+                       (_saveDeckCommand = new RelayCommand(
+                           param => SaveDeck(),
+                           param => false)
+                       );
+            }
+        }
+
+        public ICommand LoadDeckCommand
+        {
+            get {
+                return _loadDeckCommand ??
+                       (_loadDeckCommand = new RelayCommand(
+                           param => LoadDeck(),
+                           param => false)
+                       );
+            }
+        }
+
+        public ICommand NewDeckCommand
+        {
+            get {
+                return _newDeckCommand ??
+                       (_newDeckCommand = new RelayCommand(
+                           param => NewDeck(),
+                           param => true)
+                       );
+            }
+        }
+        public IList<string> DecksAvailable { get; set; } = new List<string>();
+        public string DeckSelected { get; set; }
+
         #endregion
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MainViewModel()
         {
+            DecksAvailable.Add("test1");
+            DecksAvailable.Add("test2");
+            DeckSelected = DecksAvailable.First();
+
             _flipcardDeck.Flipcards.CollectionChanged += Flipcards_CollectionChanged;
         }
 
@@ -90,6 +137,27 @@ namespace Flipcards.Viewmodel {
             foreach (var flipcard in _flipcardDeck.Flipcards)
             {
                 Flipcards.Add(new FlipCardViewModel(flipcard));
+            }
+        }
+
+        private void SaveDeck() {
+            throw new NotImplementedException();
+        }
+        private void LoadDeck() {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Create a new deck
+        /// </summary>
+        private void NewDeck() {
+            NewDeck newDeckView = new NewDeck();
+            
+            if (newDeckView.ShowDialog() == true)
+            {
+                var name = newDeckView.DeckName;
+                DecksAvailable.Add(name);
+                DeckSelected = DecksAvailable.Last();
             }
         }
     }
