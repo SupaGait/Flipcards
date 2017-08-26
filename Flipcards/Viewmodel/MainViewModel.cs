@@ -17,11 +17,14 @@ namespace Flipcards.Viewmodel {
         #region fields
         private static FlipcardDatabase _flipcardDatabase = new FlipcardDatabase();
         protected FlipcardDeck _flipcardDeck = new FlipcardDeck(_flipcardDatabase);
+        private DataBaseInputOutput dataBaseInputOutput = new DataBaseInputOutput(_flipcardDatabase);
         private ICommand _showFlipCardsCommand;
         private ICommand _addContentCommand;
         private ICommand _newDeckCommand;
         private ICommand _saveDeckCommand;
         private ICommand _loadDeckCommand;
+        private ICommand _closeWindowCommand;
+        private ICommand _openWindowCommand;
 
         #endregion
 
@@ -90,6 +93,28 @@ namespace Flipcards.Viewmodel {
         }
         public IList<string> DecksAvailable { get; set; } = new List<string>();
         public string DeckSelected { get; set; }
+
+        public ICommand CloseWindowCommand
+        {
+            get {
+                return _closeWindowCommand ??
+                       (_closeWindowCommand = new RelayCommand(
+                           param => dataBaseInputOutput.Save(),
+                           param => true)
+                       );
+            }
+        }
+
+        public ICommand OpenWindowCommand
+        {
+            get {
+                return _openWindowCommand ??
+                       (_openWindowCommand = new RelayCommand(
+                           param => dataBaseInputOutput.Load(),
+                           param => true)
+                       );
+            }
+        }
 
         #endregion
 

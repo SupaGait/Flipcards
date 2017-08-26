@@ -1,21 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace FlipcardsModel {
     //using Word = Dictionary<Language, string>;
-
+    [DataContract]
     public struct FlipcardWord : IComparable {
+
+        [DataMember]
         public string Key { get; set; }
+
+        [DataMember]
         public Dictionary<Language, string> Words{ get; set; }
+
+        [DataMember]
         public List<string> Tags { get; set; }
         
         public int CompareTo(object obj)
         {
             return string.Compare(obj as string, Key, StringComparison.Ordinal);
         }
+
+        public override string ToString()
+        {
+            return $"Key: {Key}";
+        }
     }
+
+    [DataContract]
     public class FlipcardDatabase
     {
+        [DataMember]
         public SortedSet<FlipcardWord> FlipcardsWords{ get; set; }
 
         public FlipcardDatabase()
