@@ -15,17 +15,18 @@ namespace Flipcards.Viewmodel {
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region fields
-        private static FlipcardDatabase _flipcardDatabase = new FlipcardDatabase();
-        protected FlipcardDeck _flipcardDeck = new FlipcardDeck(_flipcardDatabase);
-        private DataBaseInputOutput dataBaseInputOutput = new DataBaseInputOutput(_flipcardDatabase);
+        private static readonly FlipcardDatabase _flipcardDatabase = new FlipcardDatabase();
+        private DeckStatus _deckStatus = null;
+        protected FlipcardDeck _flipcardDeckShown = null;
+        private DataBaseInputOutput _dataBaseInputOutput = null;
+
         private ICommand _showFlipCardsCommand;
         private ICommand _addContentCommand;
         private ICommand _newDeckCommand;
         private ICommand _saveDeckCommand;
         private ICommand _loadDeckCommand;
         private ICommand _closeWindowCommand;
-        private ICommand _openWindowCommand;
-
+        private ICommand _loadedWindowCommand;
         #endregion
 
         #region properties
@@ -33,7 +34,7 @@ namespace Flipcards.Viewmodel {
         /// <summary>
         /// A Collection of flipcards shown in the view
         /// </summary>
-        public ObservableCollection<FlipCardViewModel> Flipcards { get; set; } = new ObservableCollection<FlipCardViewModel>();
+        public ObservableCollection<FlipCardViewModel> FlipcardsVm { get; set; } = new ObservableCollection<FlipCardViewModel>();
 
         /// <summary>
         /// Show the cards
@@ -99,18 +100,18 @@ namespace Flipcards.Viewmodel {
             get {
                 return _closeWindowCommand ??
                        (_closeWindowCommand = new RelayCommand(
-                           param => dataBaseInputOutput.Save(),
+                           param => _dataBaseInputOutput.Save(),
                            param => true)
                        );
             }
         }
 
-        public ICommand OpenWindowCommand
+        public ICommand LoadedWindowCommand
         {
             get {
-                return _openWindowCommand ??
-                       (_openWindowCommand = new RelayCommand(
-                           param => dataBaseInputOutput.Load(),
+                return _loadedWindowCommand ??
+                       (_loadedWindowCommand = new RelayCommand(
+                           param => _dataBaseInputOutput.Load(),
                            param => true)
                        );
             }
@@ -123,33 +124,47 @@ namespace Flipcards.Viewmodel {
         /// </summary>
         public MainViewModel()
         {
-            DecksAvailable.Add("test1");
-            DecksAvailable.Add("test2");
-            DeckSelected = DecksAvailable.First();
+            _dataBaseInputOutput = new DataBaseInputOutput(_flipcardDatabase);
+            _deckStatus = new DeckStatus(Language.Dutch, Language.German);
 
-            _flipcardDeck.Flipcards.CollectionChanged += Flipcards_CollectionChanged;
+            // If no decks loaded, create a new one.
+            if(_flipcardDatabase.FlipcardDecks.Count <= 0) {
+                _flipcardDatabase.AddDeck(new FlipcardDeck(_flipcardDatabase, _deckStatus) { Name = "newdeck" });
+            }
+
+
+            // Register for events on the deck
+            _flipcardDeckShown = _flipcardDatabase.FlipcardDecks.First().Value;
+            _flipcardDeckShown.Flipcards.CollectionChanged += Flipcards_CollectionChanged;
+
+            // Show the available decks
+            foreach (var deck in _flipcardDatabase.FlipcardDecks.Values)
+            {
+                DecksAvailable.Add(deck.Name);
+            }
+            DeckSelected = DecksAvailable.First();
         }
 
-        private void Flipcards_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
+        private void Flipcards_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
                     foreach (var flipcard in e.NewItems.OfType<Flipcard>())
                     {
-                        Flipcards.Add(new FlipCardViewModel(flipcard));
+                        FlipcardsVm.Add(new FlipCardViewModel(flipcard));
                     }
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     // TODO
                     break;
                 case NotifyCollectionChangedAction.Reset:
-                    Flipcards.Clear();
+                    FlipcardsVm.Clear();
                     break;
             }
         }
 
         private void OpenAddContentWindow() {
-            AddContentViewModel viewModel = new AddContentViewModel(_flipcardDatabase, _flipcardDeck);
+            AddContentViewModel viewModel = new AddContentViewModel(_flipcardDatabase, _flipcardDeckShown, _deckStatus);
             AddContentView view = new AddContentView {DataContext = viewModel};
             view.Show();
         }
@@ -159,9 +174,9 @@ namespace Flipcards.Viewmodel {
         /// </summary>
         private void PopulateModel()
         {
-            foreach (var flipcard in _flipcardDeck.Flipcards)
+            foreach (var flipcard in _flipcardDeckShown.Flipcards)
             {
-                Flipcards.Add(new FlipCardViewModel(flipcard));
+                FlipcardsVm.Add(new FlipCardViewModel(flipcard));
             }
         }
 
@@ -181,6 +196,12 @@ namespace Flipcards.Viewmodel {
             if (newDeckView.ShowDialog() == true)
             {
                 var name = newDeckView.DeckName;
+
+                // Create and select first deck
+                var flipcardDeck = new FlipcardDeck(_flipcardDatabase, _deckStatus) {Name = name };
+                _flipcardDatabase.AddDeck(flipcardDeck);
+                _flipcardDeckShown = flipcardDeck;
+
                 DecksAvailable.Add(name);
                 DeckSelected = DecksAvailable.Last();
             }

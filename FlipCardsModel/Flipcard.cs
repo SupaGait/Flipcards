@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Input;
 using ProjectUtils.Binding;
 
 namespace FlipcardsModel
@@ -8,7 +7,8 @@ namespace FlipcardsModel
     public class Flipcard : ObservableObject {
         #region fields
         private readonly Dictionary<Language, string> _words;
-        private bool _flipped = false;
+        private readonly DeckStatus _deckStatus;
+        private bool _flipped;
         #endregion
 
         #region properties
@@ -26,22 +26,19 @@ namespace FlipcardsModel
                 }
             }
         }
-        public string Word => GetWord(Flipped ? TranslatedLanguage : OriginalLanguage);
-        public Language OriginalLanguage { get; set; }
-        public Language TranslatedLanguage { get; set; }
-        public Language CurrentLanguage => Flipped ? TranslatedLanguage : OriginalLanguage;
-
+        public string Word => GetWord(Flipped ? _deckStatus.TranslatedLanguage : _deckStatus.OriginalLanguage);
+        public Language CurrentLanguage => Flipped ? _deckStatus.TranslatedLanguage : _deckStatus.OriginalLanguage;
         #endregion
 
         /// <summary>
         /// Default constuctor which takes a dictonary
         /// </summary>
         /// <param name="words"></param>
-        public Flipcard(Dictionary<Language, string> words, Language originalLanguage, Language translatedLanguage)
+        /// <param name="deckStatus"></param>
+        public Flipcard(Dictionary<Language, string> words, DeckStatus deckStatus)
         {
             _words = words;
-            OriginalLanguage = originalLanguage;
-            TranslatedLanguage = translatedLanguage;
+            _deckStatus = deckStatus;
         }
 
         public string GetWord(Language language)

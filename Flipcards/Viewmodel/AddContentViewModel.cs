@@ -12,11 +12,13 @@ namespace Flipcards.Viewmodel {
         private readonly FlipcardDatabase _flipcardsDatabase;
         private readonly FlipcardDeck _flipcardsDeck;
         private ICommand _addContentCommand;
+        private DeckStatus _deckStatus;
 
-        public AddContentViewModel(FlipcardDatabase flipcardDatabase, FlipcardDeck flipcardDeck)
+        public AddContentViewModel(FlipcardDatabase flipcardDatabase, FlipcardDeck flipcardDeck, DeckStatus deckStatus)
         {
             _flipcardsDatabase = flipcardDatabase;
             _flipcardsDeck = flipcardDeck;
+            _deckStatus = deckStatus;
         }
 
         public string OriginalText { get; set; } = "";
@@ -36,12 +38,10 @@ namespace Flipcards.Viewmodel {
 
         private void AddContent()
         {
-            char[] delimiters = {' ', ',',';'};
-            FlipcardWord word = new FlipcardWord
-            {
+            FlipcardWord word = new FlipcardWord {
                 // TODO correct all fields from input
                 Key = OriginalText,
-                Tags = Tags.Split(delimiters).ToList(),
+                Tags = Tags.Split(' ', ',', ';').ToList(),
                 Words = new Dictionary<Language, string>
                 {
                     {Language.Dutch, OriginalText},
@@ -50,7 +50,7 @@ namespace Flipcards.Viewmodel {
             };
 
             _flipcardsDatabase.AddWord(word);
-            _flipcardsDeck.AddFlipCard(new Flipcard(word.Words, Language.Dutch, Language.German));
+            _flipcardsDeck.AddFlipCard(new Flipcard(word.Words, _deckStatus));
 
             OriginalText = "";
             TranslatedText = "";

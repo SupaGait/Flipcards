@@ -17,8 +17,8 @@
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding CloseWindowCommand}" />
         </i:EventTrigger>
-        <i:EventTrigger EventName="Opening">
-            <i:InvokeCommandAction Command="{Binding OpenWindowCommand}" />
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedWindowCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
@@ -53,7 +53,7 @@
                 <Label Content="Deck:"/>
                 <ComboBox ItemsSource="{Binding DecksAvailable}" SelectedValue="{Binding DeckSelected}"/>
             </StackPanel>
-            <ItemsControl ItemsSource="{Binding Flipcards}">
+            <ItemsControl ItemsSource="{Binding FlipcardsVm}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel >

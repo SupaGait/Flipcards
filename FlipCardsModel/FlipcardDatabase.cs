@@ -3,73 +3,30 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace FlipcardsModel {
-    //using Word = Dictionary<Language, string>;
-    [DataContract]
-    public struct FlipcardWord : IComparable {
-
-        [DataMember]
-        public string Key { get; set; }
-
-        [DataMember]
-        public Dictionary<Language, string> Words{ get; set; }
-
-        [DataMember]
-        public List<string> Tags { get; set; }
-        
-        public int CompareTo(object obj)
-        {
-            return string.Compare(obj as string, Key, StringComparison.Ordinal);
-        }
-
-        public override string ToString()
-        {
-            return $"Key: {Key}";
-        }
-    }
-
     [DataContract]
     public class FlipcardDatabase
     {
         [DataMember]
-        public SortedSet<FlipcardWord> FlipcardsWords{ get; set; }
+        public IDictionary<string, FlipcardWord> FlipcardsWords{ get; set; } = new Dictionary<string, FlipcardWord>();
 
-        public FlipcardDatabase()
-        {
-            PopulateWithTestData();
-        }
+        [DataMember]
+        public IDictionary<string, FlipcardDeck> FlipcardDecks { get; set; } = new Dictionary<string, FlipcardDeck>();
 
         public void AddWord(FlipcardWord flipcardWord)
         {
-            FlipcardsWords.Add(flipcardWord);
+            try
+            {
+                FlipcardsWords.Add(flipcardWord.Key, flipcardWord);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
-        private void PopulateWithTestData()
+        public void AddDeck(FlipcardDeck deck)
         {
-            FlipcardsWords = new SortedSet<FlipcardWord>
-            {
-                new FlipcardWord()
-                {
-                    Key = "Chair",
-                    Tags = new List<string> { "Home", "Furniture" },
-                    Words = new Dictionary<Language,string>
-                    {
-                        {Language.English, "Chair"},
-                        {Language.Dutch, "Stoel"},
-                        {Language.German, "Sits"},
-                    }
-                },
-                new FlipcardWord()
-                {
-                    Key = "Hello",
-                    Tags = new List<string> { "Greetings", "Meeting" },
-                    Words = new Dictionary<Language,string>
-                    {
-                        {Language.English, "Hello"},
-                        {Language.Dutch, "Hallo"},
-                        {Language.German, "Gutentag"},
-                    }
-                },
-            };
+            FlipcardDecks.Add(deck.Name, deck);
         }
     }
 }

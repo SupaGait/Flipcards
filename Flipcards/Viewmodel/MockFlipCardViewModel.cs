@@ -5,8 +5,8 @@ namespace Flipcards.Viewmodel {
     {
         public MockFlipCardViewModel()
         {
-            foreach (var flipcard in _flipcardDeck.Flipcards) {
-                Flipcards.Add(new FlipCardViewModel(flipcard));
+            foreach (var flipcard in _flipcardDeckShown.Flipcards) {
+                FlipcardsVm.Add(new FlipCardViewModel(flipcard));
             }
         }
     }

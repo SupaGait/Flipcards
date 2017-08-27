@@ -49,9 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBaseInputOutput.cs" />
+    <Compile Include="DeckStatus.cs" />
     <Compile Include="Flipcard.cs" />
     <Compile Include="FlipcardDatabase.cs" />
     <Compile Include="FlipcardDeck.cs" />
+    <Compile Include="FlipcardWord.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

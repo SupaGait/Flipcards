@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace FlipcardsModel {
     public class DataBaseInputOutput
@@ -17,30 +13,76 @@ namespace FlipcardsModel {
             _database = database;
         }
 
+        private string GetObjectName<T>()
+        {
+            return "FlipCardDatabase_ " + typeof(T) + ".xml";
+        }
+
+        private void SaveObject<T>(T obj)
+        {
+            try
+            {
+                using (Stream stream = File.Open(GetObjectName<T>(), FileMode.Create)) {
+                    new DataContractSerializer(typeof(T)).WriteObject(stream, obj);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private T LoadObject<T>() where T : new()
+        {
+            try
+            {
+                using (Stream stream = File.Open(GetObjectName<T>(), FileMode.Open)) {
+                    return (T)new DataContractSerializer(typeof(T)).ReadObject(stream);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new T();
+            }
+        }
+
         public void Save()
         {
-            // Since SortedSet is not serializable, change it to a list.
-            IList<FlipcardWord> flipcardWords = new List<FlipcardWord>(_database.FlipcardsWords);
+            // Since dictonary is not serializable, change it to a list.
+            IList<FlipcardWord> flipcardWords = new List<FlipcardWord>(_database.FlipcardsWords.Values);
+            SaveObject(flipcardWords);
 
-            DataContractSerializer serializer = new DataContractSerializer(typeof(IList<FlipcardWord>));
-            using (Stream stream = File.Open("FlipCardDatabase.xml", FileMode.Create))
-            {
-                serializer.WriteObject(stream, flipcardWords);
-            }           
+            IList<FlipcardDeck> flipcardDecks = new List<FlipcardDeck>(_database.FlipcardDecks.Values);
+            SaveObject(flipcardDecks);
         }
 
         public void Load() {
-            IList<FlipcardWord> flipcardWords = new List<FlipcardWord>();
-
             DataContractSerializer serializer = new DataContractSerializer(typeof(IList<FlipcardWord>));
+
+            var flipcardWords = LoadObject<List<FlipcardWord>>();
+            foreach (var flipcardWord in flipcardWords)
+            {
+                _database.FlipcardsWords.Add(flipcardWord.Key, flipcardWord);
+            }
+
+            var flipcardDecks = LoadObject<List<FlipcardDeck>>();
+            foreach (var flipcardDeck in flipcardDecks)
+            {
+                _database.FlipcardDecks.Add(flipcardDeck.Name, flipcardDeck);
+            }
+
+
+            /*
             using (Stream stream = File.Open("FlipCardDatabase.xml", FileMode.Open))
             {
-                flipcardWords = (IList<FlipcardWord>)serializer.ReadObject(stream);
+                var flipcardWords = (IList<FlipcardWord>)serializer.ReadObject(stream);
                 foreach (var flipcardWord in flipcardWords)
                 {
-                    _database.FlipcardsWords.Add(flipcardWord);
+                    _database.FlipcardsWords.Add(flipcardWord.Key, flipcardWord);
                 }
             }
+            */
         }
     }
 }
